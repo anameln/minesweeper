@@ -77,3 +77,14 @@ class Game
     puts "Game successfully saved to #{filename}"
   end
 end
+
+if $PROGRAM_NAME == __FILE__
+  if ARGV.count > 0
+    filename = ARGV.shift
+    game = Game.initialize_from(filename)
+  else
+    game = Game.new
+  end
+
+  game.play
+end

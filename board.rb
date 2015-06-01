@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Board
 
   ROWS = 9
@@ -56,7 +58,7 @@ class Board
         if tile.status == :hidden
           row_str << "*"
         elsif tile.status == :flagged
-          row_str << "F"
+          row_str << "⚑"
         elsif tile.bomb
           row_str << "X"
         else
