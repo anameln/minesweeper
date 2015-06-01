@@ -1,25 +1,3 @@
-class Tile
-  attr_reader :bomb
-  attr_accessor :status
-
-  def initialize(bomb = false)
-    @bomb = bomb
-    @status = :hidden
-  end
-
-  def toggle_flag
-    return if self.status == :showing
-
-    self.status = self.status == :flagged ? :hidden : :flagged
-  end
-
-  def show
-    return if self.status == :showing
-
-    self.status = :showing
-  end
-end
-
 class Board
 
   ROWS = 9
@@ -95,66 +73,5 @@ class Board
 
       puts row_str
     end
-  end
-end
-
-class Game
-  def initialize
-    @board = Board.new
-  end
-
-  def play
-    @board.seed
-    until self.lost? || self.won?
-      @board.display
-
-      row, col, action = self.prompt_user
-
-      if action == :flag
-        @board.grid[row][col].toggle_flag
-      elsif action == :show
-        @board.grid[row][col].show
-      end
-    end
-
-    if self.won?
-      puts "You won!"
-    end
-  end
-
-  def prompt_user
-    print "What is your move? "
-    move = gets.chomp.split(",")
-
-    row = move[0].to_i
-    col = move[1].to_i
-
-    if move[2] == 'f'
-      action = :flag
-    else
-      action = :show
-    end
-
-    [row, col, action]
-  end
-
-  def lost?
-    @board.grid.each do |row|
-      row.each do |tile|
-        return true if tile.status == :showing && tile.bomb
-      end
-    end
-
-    false
-  end
-
-  def won?
-    @board.grid.each do |row|
-      row.each do |tile|
-        return false if tile.status == :hidden && !tile.bomb
-      end
-    end
-
-    true
   end
 end
