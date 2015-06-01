@@ -2,29 +2,36 @@ require_relative 'tile'
 require_relative 'board'
 
 class Game
-  attr_accessor :board
-  def initialize
-    @board = Board.new
+  attr_reader :board
+
+  def initialize(board = nil)
+    if board.nil?
+      @board = Board.new
+      @board.seed
+    else
+      @board = board
+    end
   end
 
   def play
-    @board.seed
-    until @board.lost? || @board.won?
-      @board.display
+    until self.board.lost? || self.board.won?
+      self.board.display
 
       row, col, action = self.prompt_user
 
       if action == :flag
-        @board.flag([row,col])
+        self.board.flag([row,col])
       elsif action == :show
-        @board.show([row, col])
+        self.board.show([row, col])
       end
     end
 
-    @board.display
+    self.board.display
 
-    if self.won?
+    if self.board.won?
       puts "You won!"
+    else
+      puts "You lose :("
     end
   end
 
