@@ -14,7 +14,7 @@ class Board
   def seed
     self.grid.each_with_index do |row, row_idx|
       row.each_index do |col_idx|
-        self.grid[row_idx][col_idx] = Tile.new(rand < PERCENT_BOMBS)
+        self[[row_idx, col_idx]] = Tile.new(rand < PERCENT_BOMBS)
       end
     end
   end
@@ -85,14 +85,13 @@ class Board
     until queue.empty?
       current_pos = queue.shift
 
-      row, col = current_pos
-      tile = self.grid[row][col]
+      tile = self[current_pos]
+
       tile.show
 
       if self.neighbor_bomb_count(current_pos) == 0 && !tile.bomb
         self.neighbors(current_pos).each do |neighbor_pos|
-          row, col = neighbor_pos
-          neighbor = self.grid[row][col]
+          neighbor = self[neighbor_pos]
           queue << neighbor_pos if neighbor.status == :hidden
         end
       end
@@ -100,8 +99,18 @@ class Board
   end
 
   def flag(pos)
-    row, col = pos
-    self.grid[row][col].toggle_flag
+    self[pos].toggle_flag
   end
+
+  def [](pos)
+    row, col = pos
+    self.grid[row][col]
+  end
+
+  def []=(pos, value)
+    row, col = pos
+    self.grid[row][col] = value
+  end
+
 
 end
