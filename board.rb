@@ -5,6 +5,12 @@ class Board
 
   PERCENT_BOMBS = 0.1
 
+  def self.valid_pos?(pos)
+    row, col = pos
+
+    row.between?(0, ROWS - 1) && col.between?(0, COLS - 1)
+  end
+
   attr_accessor :grid
 
   def initialize
@@ -46,12 +52,6 @@ class Board
     end
 
     count
-  end
-
-  def self.valid_pos?(pos)
-    row, col = pos
-
-    row.between?(0, ROWS - 1) && col.between?(0, COLS - 1)
   end
 
   def display
@@ -113,24 +113,23 @@ class Board
   end
 
   def lost?
-    self.grid.each do |row|
-      row.each do |tile|
-        return true if tile.status == :showing && tile.bomb
-      end
+    self.tiles.each do |tile|
+      return true if tile.status == :showing && tile.bomb
     end
 
     false
   end
 
   def won?
-    self.grid.each do |row|
-      row.each do |tile|
-        return false if tile.status == :hidden && !tile.bomb
-      end
+    self.tiles.each do |tile|
+      return false if tile.status == :hidden && !tile.bomb
     end
 
     true
   end
 
+  def tiles
+    self.grid.flatten
+  end
 
 end
