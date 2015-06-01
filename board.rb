@@ -76,8 +76,21 @@ class Board
   end
 
   def show(pos)
-    row, col = pos
-    self.grid[row][col].show
+    queue = [[row, col]]
+
+    until queue.empty?
+      current_pos = queue.shift
+
+      row, col = current_pos
+      tile = self.grid[row][col]
+      tile.show
+      
+      if self.neighbors_bomb_count(current_pos) == 0 && !tile.bomb
+        self.neighbors(current_pos).each do |neighbor|
+          queue << neighbor if neighbor.status == :hidden
+        end
+      end
+    end
   end
 
   def flag(pos)
