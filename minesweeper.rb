@@ -97,3 +97,9 @@ class Board
     end
   end
 end
+
+class Game
+  def initialize
+    @board = Board.new
+  end
+end
