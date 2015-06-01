@@ -73,6 +73,7 @@ class Board
   def display
     self.grid.each_with_index do |row, row_idx|
       row_str = ""
+
       row.each_with_index do |tile, col_idx|
         if tile.status == :hidden
           row_str << "*"
@@ -89,8 +90,8 @@ class Board
           end
         end
       end
+
+      puts row_str
     end
   end
-
-    
 end
