@@ -105,7 +105,7 @@ class Game
 
   def play
     @board.seed
-    until self.over?
+    until self.lost? || self.won?
       @board.display
 
       row, col, action = self.prompt_user
@@ -138,7 +138,7 @@ class Game
     [row, col, action]
   end
 
-  def over?
+  def lost?
     @board.grid.each do |row|
       row.each do |tile|
         return true if tile.status == :showing && tile.bomb
