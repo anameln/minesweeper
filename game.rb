@@ -37,9 +37,9 @@ class Game
     self.board.display
 
     if self.board.won?
-      puts "You won!"
+      puts "You won! 😄"
     elsif self.board.lost?
-      puts "You lose :("
+      puts "You lose 💩"
     end
   end
 

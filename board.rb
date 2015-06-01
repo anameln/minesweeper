@@ -1,4 +1,7 @@
+# http://copypastecharacter.com/emojis
 # encoding: utf-8
+
+require 'colorize'
 
 class Board
 
@@ -56,11 +59,11 @@ class Board
 
       row.each_with_index do |tile, col_idx|
         if tile.status == :hidden
-          row_str << "*"
+          row_str << "⌷"
         elsif tile.status == :flagged
           row_str << "⚑"
         elsif tile.bomb
-          row_str << "X"
+          row_str << "✹".colorize(:red)
         else
           num = self.neighbor_bomb_count([row_idx, col_idx])
           if num > 0
