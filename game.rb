@@ -11,9 +11,9 @@ class Game
       row, col, action = self.prompt_user
 
       if action == :flag
-        @board.grid[row][col].toggle_flag
+        @board.flag([row,col])
       elsif action == :show
-        @board.grid[row][col].show
+        @board.show([row, col])
       end
     end
 

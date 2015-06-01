@@ -74,4 +74,15 @@ class Board
       puts row_str
     end
   end
+
+  def show(pos)
+    row, col = pos
+    self.grid[row][col].show
+  end
+
+  def flag(pos)
+    row, col = pos
+    self.grid[row][col].toggle_flag
+  end
+
 end
