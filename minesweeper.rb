@@ -1,20 +1,22 @@
 class Tile
   attr_reader :bomb
+  attr_accessor :status
+
   def initialize(bomb = false)
     @bomb = bomb
     @status = :hidden
   end
 
   def toggle_flag
-    return if status == :showing
+    return if self.status == :showing
 
-    @status = @status == :flagged ? :hidden : :flagged
+    self.status = self.status == :flagged ? :hidden : :flagged
   end
 
   def show
-    return if status == :showing
+    return if self.status == :showing
 
-    @status = :showing
+    self.status = :showing
   end
 end
 
@@ -82,7 +84,7 @@ class Board
         elsif tile.bomb
           row_str << "X"
         else
-          num = self.neighbor_bomb_count(row_idx, col_idx)
+          num = self.neighbor_bomb_count([row_idx, col_idx])
           if num > 0
             row_str << num.to_s
           else
