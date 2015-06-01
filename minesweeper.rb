@@ -123,6 +123,19 @@ class Game
   end
 
   def prompt_user
+    print "What is your move? "
+    move = gets.chomp.split(",")
+
+    row = move[0].to_i
+    col = move[1].to_i
+
+    if move[2] == 'f'
+      action = :flag
+    else
+      action = :show
+    end
+
+    [row, col, action]
   end
 
   def over?
