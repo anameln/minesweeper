@@ -105,7 +105,24 @@ class Game
 
   def play
     @board.seed
+    until self.over?
+      @board.display
 
+      row, col, action = self.prompt_user
+
+      if action == :flag
+        @board.grid[row][col].toggle_flag
+      elsif action == :show
+        @board.grid[row][col].show
+      end
+    end
+
+    if self.won?
+      puts "You won!"
+    end
+  end
+
+  def prompt_user
   end
 
   def over?
