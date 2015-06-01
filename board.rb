@@ -112,5 +112,25 @@ class Board
     self.grid[row][col] = value
   end
 
+  def lost?
+    self.grid.each do |row|
+      row.each do |tile|
+        return true if tile.status == :showing && tile.bomb
+      end
+    end
+
+    false
+  end
+
+  def won?
+    self.grid.each do |row|
+      row.each do |tile|
+        return false if tile.status == :hidden && !tile.bomb
+      end
+    end
+
+    true
+  end
+
 
 end

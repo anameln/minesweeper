@@ -9,7 +9,7 @@ class Game
 
   def play
     @board.seed
-    until self.lost? || self.won?
+    until @board.lost? || @board.won?
       @board.display
 
       row, col, action = self.prompt_user
@@ -44,23 +44,4 @@ class Game
     [row, col, action]
   end
 
-  def lost?
-    @board.grid.each do |row|
-      row.each do |tile|
-        return true if tile.status == :showing && tile.bomb
-      end
-    end
-
-    false
-  end
-
-  def won?
-    @board.grid.each do |row|
-      row.each do |tile|
-        return false if tile.status == :hidden && !tile.bomb
-      end
-    end
-
-    true
-  end
 end
