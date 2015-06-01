@@ -102,4 +102,20 @@ class Game
   def initialize
     @board = Board.new
   end
+
+  def play
+    @board.seed
+
+  end
+
+  def over?
+    @board.grid.each do |row|
+      row.each do |tile|
+        return true if tile.status == :showing && tile.bomb
+      end
+    end
+
+    false
+  end
+
 end
