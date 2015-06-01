@@ -14,15 +14,9 @@ class Board
   attr_accessor :grid
 
   def initialize
-     @grid = Array.new(ROWS) { Array.new(COLS) { Tile.new } }
-  end
-
-  def seed
-    self.grid.each_with_index do |row, row_idx|
-      row.each_index do |col_idx|
-        self[[row_idx, col_idx]] = Tile.new(rand < PERCENT_BOMBS)
-      end
-    end
+     @grid = Array.new(ROWS) { Array.new(COLS) do
+       Tile.new(rand < PERCENT_BOMBS)
+     end }
   end
 
   def neighbors(pos)

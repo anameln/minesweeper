@@ -4,13 +4,8 @@ require_relative 'board'
 class Game
   attr_reader :board
 
-  def initialize(board = nil)
-    if board.nil?
-      @board = Board.new
-      @board.seed
-    else
-      @board = board
-    end
+  def initialize(board = Board.new)
+    @board = board
   end
 
   def play
@@ -47,7 +42,7 @@ class Game
     else
       action = :show
     end
-    #debugger
+
     [row, col, action]
   end
 
