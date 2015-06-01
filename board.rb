@@ -125,5 +125,4 @@ class Board
   def tiles
     self.grid.flatten
   end
-
 end
