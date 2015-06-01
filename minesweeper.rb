@@ -148,4 +148,13 @@ class Game
     false
   end
 
+  def won?
+    @board.grid.each do |row|
+      row.each do |tile|
+        return false if tile.status == :hidden && !tile.bomb
+      end
+    end
+
+    true
+  end
 end
