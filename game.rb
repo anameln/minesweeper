@@ -2,6 +2,9 @@ require 'yaml'
 require_relative 'tile'
 require_relative 'board'
 
+class InvalidMoveTypeError < StandardError
+end
+
 class Game
 
   def self.initialize_from(filename)
@@ -44,17 +47,33 @@ class Game
   end
 
   def prompt_user
-    print "What is your move (q for quit)? "
-    response = gets.chomp
+    begin
+      print "What is your move (q for quit)? "
+      response = gets.chomp
+      response = response.split(",")
+      valid_r = ["q", "s", "f"]
+      raise InvalidMoveTypeError.new if !valid_r.include?(response[-1])
+
+      row = response[0].to_i
+      col = response[1].to_i
+
+      raise ArgumentError.new("Row out of range") unless row.between?(0, Board::ROWS - 1)
+      raise ArgumentError.new("Col out of range") unless col.between?(0, Board::COLS - 1)
+
+    rescue InvalidMoveTypeError => e
+      puts "Invalid move, try again."
+      retry
+    rescue ArgumentError => e
+      puts e.message
+      puts "Try again."
+      retry
+    end
 
     if response == 'q'
       return [-1, -1, :quit]
     end
 
-    move = response.split(",")
 
-    row = move[0].to_i
-    col = move[1].to_i
 
     case move[2]
     when 'f'
